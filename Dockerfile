@@ -1,7 +1,10 @@
-# 7 Nov 2018
+# 8 Nov 2018
 # Image based on Debian 9.5 (Stretch) slim, compiling Varnish from scratch
-# Build image: docker build -t varnish4 -f Dockerfile4 .
-# Current image size: 168MB
+# We have two installation groups, for compilation and runtime, and we delete the compilation one at the end.
+# Group for compilation: https://varnish-cache.org/docs/5.1/installation/install.html
+# Group for runtime: https://packages.debian.org/stable/varnish
+# Build image: docker build -t varnish5 -f Dockerfile5 .
+# Current image size: 162MB
 
 FROM debian:9.5-slim
 
@@ -10,7 +13,11 @@ LABEL maintainer="Ernesto J. Perez <ernesto.perez@esl-asia.com>"
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
 
-ENV VARNISH_VERSION 5.1.3
+ENV VARNISH_VERSION=5.1.3 \
+    VARNISH_VCL_CONF=/etc/varnish/default.vcl \
+    VARNISH_LISTEN_PORT=8080
+
+COPY start-varnish.sh /tmp/
 
 RUN set -x \
  && addgroup --system varnish \
@@ -22,13 +29,14 @@ RUN set -x \
  && cd /usr/local/src \
  && apt-get update \
  && apt-get install --no-install-recommends --no-install-suggests -y \
-        # Required for compilation
+        # Packages required only for compilation
         make automake autotools-dev libedit-dev \
         libjemalloc-dev libncurses5-dev libpcre3-dev \
         libtool pkg-config python-docutils python-sphinx \
         ca-certificates wget \
-        # Required at runtime
-        libedit2 libjemalloc1 libncurses5 libpcre3 \
+        # Packages required at runtime
+        adduser gcc init-system-helpers libbsd0 libc6 libc6-dev libedit2 libjemalloc1 libncurses5 \
+        libpcre3 libtinfo5 lsb-base \
  && wget https://varnish-cache.org/_downloads/varnish-${VARNISH_VERSION}.tgz \
  && tar xzf varnish-${VARNISH_VERSION}.tgz \
  && cd varnish-${VARNISH_VERSION} \
@@ -37,19 +45,20 @@ RUN set -x \
  && make \
  && make install \
  && mv /usr/local/share/doc/varnish/example.vcl /etc/varnish/default.vcl \
+ # Delete all packages required only for compilation
  && apt-get remove --purge --auto-remove -y \
-        make automake libedit-dev libjemalloc-dev libncurses5-dev libpcre3-dev pkg-config python-docutils python-sphinx \
+        make automake autotools-dev libedit-dev \
+        libjemalloc-dev libncurses5-dev libpcre3-dev \
+        libtool pkg-config python-docutils python-sphinx \
         ca-certificates wget \
- #             autotools-dev (we can only delete a couple of dependencies from here)
  && strip /usr/local/bin/varnish* \
  && strip /usr/local/sbin/varnish* \
  && strip /usr/local/lib/*varnish*.so \
+ && chmod a+x /tmp/*.sh \
+ && mv /tmp/*.sh /usr/local/bin/ \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /usr/local/src/* /usr/local/man/*
 
-ENV VARNISH_PORT 8080
-EXPOSE 8080
+EXPOSE ${VARNISH_LISTEN_PORT}
 
-# apt list --installed
-# apt-cache depends packagename
-# apt-cache rdepends --installed packagename
+CMD ["/usr/local/bin/start-varnish.sh"]
