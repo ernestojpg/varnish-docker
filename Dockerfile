@@ -14,7 +14,9 @@ LABEL maintainer="Ernesto J. Perez <ernestojpg@gmail.com>"
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
 
-ENV VARNISH_VERSION=5.1.3 \
+ARG VARNISH_VERSION=5.1.3
+
+ENV VARNISH_VERSION=${VARNISH_VERSION} \
     VARNISH_VCL_CONF=/etc/varnish/default.vcl \
     VARNISH_LISTEN_PORT=8080
 
@@ -45,7 +47,6 @@ RUN set -x \
  && ./configure \
  && make \
  && make install \
- && mv /usr/local/share/doc/varnish/example.vcl /etc/varnish/default.vcl \
  # Delete all packages required only for compilation
  && apt-get remove --purge --auto-remove -y \
         make automake autotools-dev libedit-dev \
@@ -59,6 +60,8 @@ RUN set -x \
  && mv /tmp/*.sh /usr/local/bin/ \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /usr/local/src/* /usr/local/man/*
+
+COPY default.vcl ${VARNISH_VCL_CONF}
 
 EXPOSE ${VARNISH_LISTEN_PORT}
 
