@@ -1,14 +1,15 @@
-# 8 Nov 2018
-# Image based on Debian 9.5 (Stretch) slim, compiling Varnish from scratch
+# Varnish Docker image based on Debian 9.9 (Stretch) slim, compiling Varnish from scratch.
+#
 # We have two installation groups, for compilation and runtime, and we delete the compilation one at the end.
 # Group for compilation: https://varnish-cache.org/docs/5.1/installation/install.html
 # Group for runtime: https://packages.debian.org/stable/varnish
-# Build image: docker build -t varnish5 -f Dockerfile5 .
+#
+# Last updated: 21 June 2019
 # Current image size: 162MB
 
-FROM debian:9.5-slim
+FROM debian:9.9-slim
 
-LABEL maintainer="Ernesto J. Perez <ernesto.perez@esl-asia.com>"
+LABEL maintainer="Ernesto J. Perez <ernestojpg@gmail.com>"
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
@@ -35,10 +36,10 @@ RUN set -x \
         libtool pkg-config python-docutils python-sphinx \
         ca-certificates wget \
         # Packages required at runtime
-        adduser gcc init-system-helpers libbsd0 libc6 libc6-dev libedit2 libjemalloc1 libncurses5 \
+        gcc init-system-helpers libbsd0 libc6 libc6-dev libedit2 libjemalloc1 libncurses5 \
         libpcre3 libtinfo5 lsb-base \
- && wget https://varnish-cache.org/_downloads/varnish-${VARNISH_VERSION}.tgz \
- && tar xzf varnish-${VARNISH_VERSION}.tgz \
+ && wget -q https://varnish-cache.org/_downloads/varnish-${VARNISH_VERSION}.tgz \
+ && tar -xzf varnish-${VARNISH_VERSION}.tgz \
  && cd varnish-${VARNISH_VERSION} \
  && ./autogen.sh \
  && ./configure \
