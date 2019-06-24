@@ -1,6 +1,8 @@
 # Supported tags and respective `Dockerfile` links
 
+* [5.2.1, 5.2, 5, latest](https://github.com/ernestojpg/varnish-docker/blob/master/Dockerfile)
 * [5.1.3, 5.1](https://github.com/ernestojpg/varnish-docker/blob/master/Dockerfile)
+* [5.0.0, 5.0](https://github.com/ernestojpg/varnish-docker/blob/master/Dockerfile)
 
 # What is Varnish?
 
@@ -30,9 +32,9 @@ This is just a lightweight and easy to use Varnish image for Docker. It is based
 
 To test our image quickly we could just run a simple container like this:
 ```
-$ docker run -p 8080:8080 ernestojpg/varnish:5.1.3
+$ docker run -p 8080:8080 ernestojpg/varnish
 ```
-This will start a very simple container listening on port `8080` and returning a static message. So now, if we open the
+This will start a very simple Varnish container listening on port `8080` and returning a static message. So now, if we open the
 URL `http://localhost:8080` in our browser we should see something like this:
 ```
 Hello from Varnish!
@@ -44,7 +46,7 @@ For real-life applications we will need to use our own [VCL file](https://varnis
 The simplest way of doing that is to mount our VCL file in the default path `/etc/varnish/default.vcl` inside the container
 when we run it. For example:
 ```
-$ docker run -v my_custom_config.vcl:/etc/varnish/default.vcl -p 8080:8080 ernestojpg/varnish:5.1.3
+$ docker run -v my_custom_config.vcl:/etc/varnish/default.vcl -p 8080:8080 ernestojpg/varnish
 ```
 
 Note that we can mount multiple VCL files or even a complete folder if needed.
