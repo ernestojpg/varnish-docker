@@ -7,7 +7,7 @@
 <table>
     <tr>
     <td width="130">
-        <img src="https://raw.githubusercontent.com/ernestojpg/varnish-docker/master/logo.png" width="100%">
+        <a href="#"><img src="https://raw.githubusercontent.com/ernestojpg/varnish-docker/master/logo.png" width="100%"></a>
     </td>
     <td valign="top">
         <p><a href="https://varnish-cache.org/">Varnish Cache</a> is a web application accelerator also known as a caching HTTP reverse proxy.
