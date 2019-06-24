@@ -6,7 +6,7 @@
 
 <table>
     <tr>
-    <td><img src="https://varnish-cache.org/_static/varnish-bunny.png" width="131" height="198"></td>
+    <td><img src="https://raw.githubusercontent.com/ernestojpg/varnish-docker/master/logo.png"></td>
     <td valign="top">
         <p><a href="https://varnish-cache.org/">Varnish Cache</a> is a web application accelerator also known as a caching HTTP reverse proxy.
         You install it in front of any HTTP server and configure it to cache the contents.
