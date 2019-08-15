@@ -59,10 +59,12 @@ RUN set -eux \
  && strip /usr/local/bin/varnish* \
  && strip /usr/local/sbin/varnish* \
  && strip /usr/local/lib/*varnish*.so \
+ && strip /usr/local/lib/varnish/vmods/*.so \
  && chmod a+x /tmp/*.sh \
  && mv /tmp/*.sh /usr/local/bin/ \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/* /usr/local/src/* /usr/local/man/*
+ && rm -rf /var/lib/apt/lists/* /var/log/apt/* /usr/local/src/* /usr/local/man/* \
+ && find /var/log -type f -name '*log' -exec truncate --size=0 {} \;
 
 COPY default.vcl ${VARNISH_VCL_CONF}
 
