@@ -1,8 +1,9 @@
 # Supported tags and respective `Dockerfile` links
 
-* [`6.2.0`, `6.2`, `6`, `latest`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish62/Dockerfile)
+* [`6.3.0`, `6.3`, `6`, `latest`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish62-63/Dockerfile)
+* [`6.2.1`, `6.2`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish62-63/Dockerfile)
 * [`6.1.1`, `6.1`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
-* [`6.0.3`, `6.0`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
+* [`6.0.4`, `6.0`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
 * [`5.2.1`, `5.2`, `5`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
 * [`5.1.3`, `5.1`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
 * [`5.0.0`, `5.0`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
