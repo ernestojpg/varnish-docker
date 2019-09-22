@@ -1,4 +1,4 @@
-# Varnish Docker image based on Debian 9.9 (Stretch) slim, compiling Varnish from scratch.
+# Varnish Docker image based on Debian 9.11 (Stretch) slim, compiling Varnish from scratch.
 #
 # We have two installation groups, for compilation and runtime, and we delete the compilation one at the end.
 # Group for compilation: https://varnish-cache.org/docs/6.1/installation/install.html
@@ -7,10 +7,10 @@
 # Example of how to build the image:
 #   docker build --build-arg VARNISH_VERSION=6.1.1 -t ernestojpg/varnish:6.1.1 -f varnish50-61/Dockerfile .
 #
-# Last updated: 26 June 2019
+# Last updated: 22 September 2019
 # Current image size: 162MB
 
-FROM debian:9.9-slim
+FROM debian:9.11-slim
 
 LABEL maintainer="Ernesto J. Perez <ernestojpg@gmail.com>"
 
