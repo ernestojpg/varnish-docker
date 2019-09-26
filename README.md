@@ -1,6 +1,7 @@
 # Supported tags and respective `Dockerfile` links
 
 * [`6.3.0`, `6.3`, `6`, `latest`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish62-63/Dockerfile)
+* [`6.3.0-vmods`, `6.3-vmods`, `6-vmods`, `vmods`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish62-63/Dockerfile-vmods)
 * [`6.2.1`, `6.2`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish62-63/Dockerfile)
 * [`6.1.1`, `6.1`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
 * [`6.0.4`, `6.0`](https://github.com/ernestojpg/varnish-docker/blob/master/varnish50-61/Dockerfile)
@@ -22,13 +23,16 @@
         depending on your architecture.</p>
         <p>You can read a general overview of <a href="https://varnish-cache.org/docs/trunk/users-guide/intro.html">The Big Varnish Picture</a>
         in the official Varnish documentation.</p>
-    </td> 
+    </td>
     </tr>
 </table>
 
 # About this image
 
-This is just a lightweight and easy to use Varnish image for Docker. It is based on Debian Stretch Slim and its size on disk is around 162MB.
+This is just a lightweight and easy to use Varnish image for Docker.
+It is based on Debian Stretch Slim and its size on disk is around 162MB.
+
+A special variant (`-vmods`) with some of the most popular Varnish modules (VMODS) is also provided.
 
 # How to use this image
 
@@ -61,7 +65,7 @@ We can also pass some environment variables when running a new container for con
 
 * `VARNISH_LISTEN_ADDRESS`: The address where Varnish will listen to. The address can be a host name ("localhost"), an IPv4 dotted-quad
   ("127.0.0.1"), or an IPv6 address enclosed in square brackets ("[::1]").  
-  **Default:** Empty. Varnish will listen on all available IPv4 and IPv6 interfaces. 
+  **Default:** Empty. Varnish will listen on all available IPv4 and IPv6 interfaces.
 * `VARNISH_LISTEN_PORT`: The port where Varnish will listen to.  
   **Default:** `8080`
 * `VARNISH_VCL_CONF`: Path to the default VCL file.  
@@ -71,3 +75,29 @@ We can also pass some environment variables when running a new container for con
 * `DAEMON_OPTS`: Any extra option we want to pass when starting the varnishd process. More information in the
   [varnishd official documentation](https://varnish-cache.org/docs/trunk/reference/varnishd.html).  
   **Default:** Empty. No extra parameters are passed.
+
+# Image Variants
+
+Currently `ernestojpg/varnish` images come in two different flavours, each designed for a specific use case.
+
+## `ernestojpg/varnish:<version>`
+
+This is the defacto image. If you are unsure about what your needs are, you probably want to use this one.
+
+## `ernestojpg/varnish:<version>-vmods`
+
+Special variant that also includes some of the most popular Varnish modules (VMODS),
+keeping the image size down to the bare minimum (162MB on disk).
+
+The additional modules installed are:
+- [Varnish-Modules from Uplex](https://github.com/nigoroll/varnish-modules.git)
+  + vmod_bodyaccess
+  + vmod_cookie
+  + vmod_header
+  + vmod_saintmode
+  + vmod_tcp
+  + vmod_var
+  + vmod_vsthrottle
+  + vmod_xkey
+- [VMOD Blobdigest from Uplex](https://code.uplex.de/uplex-varnish/libvmod-blobdigest.git)
+  + vmod_blobdigest

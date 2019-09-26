@@ -1,0 +1,68 @@
+# Varnish Docker image based on the "ernestojpg/varnish one", and with extra VMODS
+# installed on it.
+#
+# Installed VMOD:
+#  - Varnish-Modules (uplex): vmod_bodyaccess, vmod_cookie, vmod_header,
+#    vmod_saintmode, vmod_tcp, vmod_var, vmod_vsthrottle, vmod_xkey
+#  - VMOD blobdigest
+#
+# Last updated: 26 September 2019
+# Current image size: 162MB
+
+ARG VARNISH_VERSION=6.3.0
+
+FROM ernestojpg/varnish:${VARNISH_VERSION}
+
+RUN set -eux \
+ && mkdir -p /usr/local/src \
+ && cd /usr/local/src \
+ && touch /usr/local/lib/varnish/modules.txt \
+ && apt-get update \
+ && apt-get install --no-install-recommends --no-install-suggests -y \
+        make automake autoconf-archive autotools-dev libedit-dev \
+        libjemalloc-dev libncurses5-dev libpcre3-dev \
+        libtool pkg-config python3-docutils python3-sphinx \
+        ca-certificates git
+
+### Install Varnish-Modules (uplex version)
+
+ARG VARNISH_MODULES_COMMIT=3a78e8a466f0e0dc43b0436b7bbedb60170805e3
+ARG VARNISH_MODULES_VERSION=6.2-20190417
+
+RUN set -eux \
+ && cd /usr/local/src \
+ && git clone https://github.com/nigoroll/varnish-modules.git \
+ && cd varnish-modules \
+ && git checkout $VARNISH_MODULES_COMMIT \
+ && ./bootstrap \
+ && ./configure \
+ && make \
+ && make install \
+ && echo "Varnish-Modules: Version ${VARNISH_MODULES_VERSION} (commit ${VARNISH_MODULES_COMMIT})" \
+    >> /usr/local/lib/varnish/modules.txt
+
+### Install VMOD blobdigest
+
+ARG LIBVMOD_BLOBDIGEST_COMMIT=bb1e30858c2abe268380dca027d8318945d4c38f
+ARG LIBVMOD_BLOBDIGEST_VERSION=6.2-20190314
+
+RUN set -eux \
+ && cd /usr/local/src \
+ && git clone https://code.uplex.de/uplex-varnish/libvmod-blobdigest.git \
+ && cd libvmod-blobdigest \
+ && git checkout $LIBVMOD_BLOBDIGEST_COMMIT \
+ && ./autogen.sh \
+ && ./configure \
+ && make \
+ && make install \
+ && echo "VMOD blobdigest: Version ${LIBVMOD_BLOBDIGEST_VERSION} (commit ${LIBVMOD_BLOBDIGEST_COMMIT})" \
+    >> /usr/local/lib/varnish/modules.txt
+
+RUN strip /usr/local/lib/varnish/vmods/*.so
+
+# Create a new image using the compiled modules from the previous one
+
+FROM ernestojpg/varnish:${VARNISH_VERSION}
+
+COPY --from=0 /usr/local/lib/varnish/vmods/* /usr/local/lib/varnish/vmods/
+COPY --from=0 /usr/local/lib/varnish/modules.txt /usr/local/lib/varnish/
