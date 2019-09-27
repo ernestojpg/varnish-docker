@@ -58,6 +58,23 @@ RUN set -eux \
  && echo "VMOD blobdigest: Version ${LIBVMOD_BLOBDIGEST_VERSION} (commit ${LIBVMOD_BLOBDIGEST_COMMIT})" \
     >> /usr/local/lib/varnish/modules.txt
 
+### Install VMOD parseform
+
+ARG LIBVMOD_PARSEFORM_COMMIT=a0561a1edc4f3850af208bb7a9436f326eb7ce99
+ARG LIBVMOD_PARSEFORM_VERSION=master-20190919
+
+RUN set -eux \
+ && cd /usr/local/src \
+ && git clone https://github.com/xcir/libvmod-parseform.git \
+ && cd libvmod-parseform \
+ && git checkout $LIBVMOD_PARSEFORM_COMMIT \
+ && ./autogen.sh \
+ && ./configure \
+ && make \
+ && make install \
+ && echo "VMOD parseform: Version ${LIBVMOD_PARSEFORM_VERSION} (commit ${LIBVMOD_PARSEFORM_COMMIT})" \
+    >> /usr/local/lib/varnish/modules.txt
+
 RUN strip /usr/local/lib/varnish/vmods/*.so
 
 # Create a new image using the compiled modules from the previous one

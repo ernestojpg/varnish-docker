@@ -11,6 +11,8 @@ docker build \
    --build-arg VARNISH_MODULES_VERSION=6.2-20190417 \
    --build-arg LIBVMOD_BLOBDIGEST_COMMIT=bb1e30858c2abe268380dca027d8318945d4c38f \
    --build-arg LIBVMOD_BLOBDIGEST_VERSION=6.2-20190314 \
+   --build-arg LIBVMOD_PARSEFORM_COMMIT=a0561a1edc4f3850af208bb7a9436f326eb7ce99 \
+   --build-arg LIBVMOD_PARSEFORM_VERSION=master-20190919 \
    -t ernestojpg/varnish:6.3.0-vmods \
    -f varnish62-63/Dockerfile-vmods .
 docker tag ernestojpg/varnish:6.3.0-vmods ernestojpg/varnish:6.3-vmods

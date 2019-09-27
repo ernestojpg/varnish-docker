@@ -32,7 +32,8 @@
 This is just a lightweight and easy to use Varnish image for Docker.
 It is based on Debian Stretch Slim and its size on disk is around 162MB.
 
-A special variant (`-vmods`) with some of the most popular Varnish modules (VMODS) is also provided.
+A special variant (`-vmods`) with some of the most popular Varnish modules
+([VMODS](https://varnish-cache.org/vmods/)) is also provided.
 
 # How to use this image
 
@@ -90,7 +91,7 @@ Special variant that also includes some of the most popular Varnish modules (VMO
 keeping the image size down to the bare minimum (162MB on disk).
 
 The additional modules installed are:
-- [Varnish-Modules from Uplex](https://github.com/nigoroll/varnish-modules.git)
+- [Varnish-Modules from Uplex](https://github.com/nigoroll/varnish-modules)
   + vmod_bodyaccess
   + vmod_cookie
   + vmod_header
@@ -99,5 +100,16 @@ The additional modules installed are:
   + vmod_var
   + vmod_vsthrottle
   + vmod_xkey
-- [VMOD Blobdigest from Uplex](https://code.uplex.de/uplex-varnish/libvmod-blobdigest.git)
+- [VMOD Blobdigest from Uplex](https://code.uplex.de/uplex-varnish/libvmod-blobdigest)
   + vmod_blobdigest
+- [VMOD Parseform](https://github.com/xcir/libvmod-parseform)
+  + vmod_parseform
+
+### VMODS Versions
+
+Because compatibility reasons, each varnish image version comes with different versions of the VMODS.
+In the following table we can see the installed VMODS for each of the varnish images (`-vmods` variant):
+
+| Varnish       | Varnish-Modules | VMOD Blobdigest | VMOD Parseform  |
+| ------------- | --------------- | --------------- | --------------- |
+| **6.3.0**     | 6.2-20190417    | 6.2-20190314    | master-20190919 |
