@@ -92,18 +92,18 @@ keeping the image size down to the bare minimum (162MB on disk).
 
 The additional modules installed are:
 - [Varnish-Modules from Uplex](https://github.com/nigoroll/varnish-modules)
-  + vmod_bodyaccess
-  + vmod_cookie
-  + vmod_header
-  + vmod_saintmode
-  + vmod_tcp
-  + vmod_var
-  + vmod_vsthrottle
-  + vmod_xkey
+  + [vmod_bodyaccess](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_bodyaccess.vcc): Varnish module that lets you access the request body.
+  + [vmod_cookie](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_cookie.vcc): Handle HTTP cookies easier in Varnish VCL.
+  + [vmod_header](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_header.vcc): Varnish Module for manipulation of duplicated HTTP headers.
+  + [vmod_saintmode](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_saintmode.vcc): Saintmode lets you deal with a backend that is failing in random ways for specific requests.
+  + [vmod_tcp](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_tcp.vcc): The TCP vmod opens for access and modification of client TCP connection attributes from VCL.
+  + [vmod_var](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_var.vcc): This VMOD implements basic variable support in VCL.
+  + [vmod_vsthrottle](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_vsthrottle.vcc): A Varnish vmod for rate-limiting traffic on a single Varnish server.
+  + [vmod_xkey](https://raw.githubusercontent.com/nigoroll/varnish-modules/master/src/vmod_xkey.vcc): This vmod adds secondary hashes to objects, allowing fast purging on all objects with this hash key.
 - [VMOD Blobdigest from Uplex](https://code.uplex.de/uplex-varnish/libvmod-blobdigest)
-  + vmod_blobdigest
+  + [vmod_blobdigest](https://code.uplex.de/uplex-varnish/libvmod-blobdigest/raw/master/src/vmod_blobdigest.vcc): This Varnish Module (VMOD) generates message digests, keyed-hash message authentication codes (HMACs) and checksums using the VCL data type BLOB.
 - [VMOD Parseform](https://github.com/xcir/libvmod-parseform)
-  + vmod_parseform
+  + [vmod_parseform](https://raw.githubusercontent.com/xcir/libvmod-parseform/master/src/vmod_parseform.vcc): Provides easy access to fields in Form POST requests.
 
 ### VMODS Versions
 
